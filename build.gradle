@@ -1,0 +1,20 @@
+gradle.taskGraph.whenReady {
+	println "whenReady 1 start"
+	println "whenReady 1 op ${gradle.services.get(org.gradle.internal.operations.BuildOperationExecutor).currentOperation.id} ${gradle.services.get(org.gradle.internal.operations.BuildOperationExecutor).currentOperation.parentId}"
+	// Thread.sleep 1000
+	println "whenReady 1 finish"
+}
+
+gradle.taskGraph.whenReady {
+	println "whenReady 2 start"
+	println "whenReady 2 op ${gradle.services.get(org.gradle.internal.operations.BuildOperationExecutor).currentOperation.id} ${gradle.services.get(org.gradle.internal.operations.BuildOperationExecutor).currentOperation.parentId}"
+	// Thread.sleep 1000
+	println "whenReady 2 finish"
+}
+
+tasks.create("foo") << {
+	println "executing :foo"
+}
+
+foo.dependsOn(gradle.includedBuild("included1").task(":foo"))
+foo.dependsOn(gradle.includedBuild("included2").task(":foo"))

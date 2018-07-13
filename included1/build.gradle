@@ -1,0 +1,18 @@
+gradle.taskGraph.whenReady {
+	println "included1 whenReady 1 start"
+	println "included1 whenReady 1 op ${gradle.services.get(org.gradle.internal.operations.BuildOperationExecutor).currentOperation.id} ${gradle.services.get(org.gradle.internal.operations.BuildOperationExecutor).currentOperation.parentId}"
+	// Thread.sleep 1000
+	println "included1 whenReady 1 finish"
+}
+
+gradle.taskGraph.whenReady {
+	println "included1 whenReady 2 start"
+	println "included1 whenReady 2 op ${gradle.services.get(org.gradle.internal.operations.BuildOperationExecutor).currentOperation.id} ${gradle.services.get(org.gradle.internal.operations.BuildOperationExecutor).currentOperation.parentId}"
+	// Thread.sleep 1000
+	println "included1 whenReady 2 finish"
+}
+
+tasks.create("foo") << {
+	println "executing :included1:foo"
+}
+
